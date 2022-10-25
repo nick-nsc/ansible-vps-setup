@@ -1,0 +1,13 @@
+---
+- name: Multi-purpose VPS deployment.
+  hosts: vps
+  become: yes
+
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=86400
+      changed_when: false
+
+  roles:
+    - role: hardening
+      tags: hardening

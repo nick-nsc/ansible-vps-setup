@@ -1,0 +1,33 @@
+---
+- import_tasks: apparmor.yml
+  tags: apparmor
+
+- import_tasks: timesyncd.yml
+  tags: timesyncd
+
+- import_tasks: services.yml
+  tags: services
+
+- import_tasks: sysctl.yml
+  tags: sysctl
+
+- import_tasks: firewall.yml
+  tags: firewall
+
+- import_tasks: auditing.yml
+  tags: auditing
+
+- import_tasks: logging.yml
+  tags: logging
+
+- import_tasks: cron.yml
+  tags: cron
+
+- import_tasks: sshd.yml
+  tags: sshd
+
+- import_tasks: privilege_esc.yml
+  tags: privilege_esc
+
+- import_tasks: passwords.yml
+  tags: passwords

@@ -1,0 +1,6 @@
+---
+- name: Remove unnecessary services
+  apt:
+    name: "{{ uninstall_services }}"
+    state: absent
+    purge: yes

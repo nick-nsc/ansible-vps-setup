@@ -1,0 +1,42 @@
+---
+- name: Set /etc/crontab file permissions
+  file:
+    path: /etc/crontab
+    owner: root
+    group: root
+    mode: '600'
+
+- name: Set cron hourly directory permissions
+  file:
+    path: /etc/cron.hourly/
+    owner: root
+    group: root
+    mode: '700'
+
+- name: Set cron daily directory permissions
+  file:
+    path: /etc/cron.daily/
+    owner: root
+    group: root
+    mode: '700'
+
+- name: Set cron weekly directory permissions
+  file:
+    path: /etc/cron.weekly/
+    owner: root
+    group: root
+    mode: '700'
+
+- name: Set cron monthly directory permissions
+  file:
+    path: /etc/cron.monthly/
+    owner: root
+    group: root
+    mode: '700'
+
+- name: Set cron.d directory permissions
+  file:
+    path: /etc/cron.d/
+    owner: root
+    group: root
+    mode: '700'

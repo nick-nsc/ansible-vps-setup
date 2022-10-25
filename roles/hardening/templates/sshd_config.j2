@@ -1,0 +1,41 @@
+Protocol 2
+
+AllowUsers {{ sshd_allowed_users | unique | join(" ") }}
+UsePAM yes
+PermitRootLogin no
+PasswordAuthentication no
+HostbasedAuthentication no
+PermitEmptyPasswords no
+PubkeyAuthentication yes
+ChallengeResponseAuthentication no
+GSSAPIAuthentication no
+LoginGraceTime 60
+IgnoreRhosts yes
+
+X11Forwarding no
+AllowTcpForwarding no
+AllowAgentForwarding yes
+PermitTunnel no
+
+Ciphers {{ sshd_ciphers | unique | join(",") }}
+MACs {{ sshd_macs | unique | join(",") }}
+KexAlgorithms {{ sshd_kex | unique | join(",") }}
+
+MaxAuthTries 5
+MaxStartups 10:30:60
+MaxSessions 10
+
+ClientAliveInterval 60
+ClientAliveCountMax 10
+
+LogLevel VERBOSE
+PrintMotd no
+
+SyslogFacility AUTH
+Subsystem       sftp    /usr/lib/openssh/sftp-server
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL
+GSSAPICleanupCredentials yes
+GatewayPorts no
+PubkeyAcceptedKeyTypes=+ssh-dss

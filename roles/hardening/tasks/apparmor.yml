@@ -1,0 +1,27 @@
+---
+- name: Install AppArmor
+  apt:
+    name: apparmor
+    state: present
+
+- name: Check AppArmor status
+  command: dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' apparmor
+  register: var_apparmor_status
+  changed_when: false
+  failed_when: "var_apparmor_status.stdout != 'apparmor\tinstall ok installed\tinstalled'"
+
+- name: Enable AppArmor
+  replace:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX="((:?(?!{{ item.option }}={{ item.value }}).)*?)"$'
+    replace: 'GRUB_CMDLINE_LINUX="\1 {{ item.option }}={{ item.value }}"'
+    validate: /bin/sh %s
+  loop:
+    - option: apparmor
+      value: 1
+    - option: security
+      value: apparmor
+  loop_control:
+    label: "{{ item.option }}"
+  notify:
+    - update-grub

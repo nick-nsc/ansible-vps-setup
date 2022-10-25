@@ -1,0 +1,115 @@
+---
+- name: Disable packet redirect sending (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.send_redirects
+    value: '0'
+
+- name: Disable packet redirect sending (2)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.default.send_redirects
+    value: '0'
+
+- name: Disable IP forwarding (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '0'
+
+- name: Disable IP forwarding (2)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '0'
+
+- name: Deny source routed packets (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.accept_source_route
+    value: '0'
+
+- name: Deny source routed packets (2)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.default.accept_source_route
+    value: '0'
+
+- name: Deny source routed packets (3)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.accept_source_route
+    value: '0'
+
+- name: Deny source routed packets (4)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.default.accept_source_route
+    value: '0'
+
+- name: Deny ICMP redirects (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.accept_redirects
+    value: '0'
+
+- name: Deny ICMP redirects (2)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.default.accept_redirects
+    value: '0'
+
+- name: Deny ICMP redirects (3)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.accept_redirects
+    value: '0'
+
+- name: Deny ICMP redirects (4)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.default.accept_redirects
+    value: '0'
+
+- name: Deny secure ICMP redirects (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.default.secure_redirects
+    value: '0'
+
+- name: Deny secure ICMP redirects (2)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.secure_redirects
+    value: '0'
+
+- name: Log suspicious packets (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.log_martians
+    value: '1'
+
+- name: Log suspicious packets (2)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.default.log_martians
+    value: '1'
+
+- name: Ignore broadcast ICMP packets
+  ansible.posix.sysctl:
+    name: net.ipv4.icmp_echo_ignore_broadcasts
+    value: '1'
+
+- name: Ignore bogus ICMP packets
+  ansible.posix.sysctl:
+    name: net.ipv4.icmp_ignore_bogus_error_responses
+    value: '1'
+
+- name: Enable Reverse Path Filtering (1)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.all.rp_filter
+    value: '1'
+
+- name: Enable Reverse Path Filtering (2)
+  ansible.posix.sysctl:
+    name: net.ipv4.conf.default.rp_filter
+    value: '1'
+
+- name: Enable TCP SYN cookies
+  ansible.posix.sysctl:
+    name: net.ipv4.tcp_syncookies
+    value: '1'
+
+- name: Don't accept IPv6 router advertisements (1)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.accept_ra
+    value: '0'
+
+- name: Don't accept IPv6 router advertisements (2)
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.default.accept_ra
+    value: '0'

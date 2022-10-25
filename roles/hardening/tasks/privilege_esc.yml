@@ -1,0 +1,15 @@
+---
+- name: Set sudo log file
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^Defaults logfile'
+    line: 'Defaults logfile="/var/log/sudo.log"'
+    validate: visudo -cf %s
+
+- name: Limit use of the su-command to sugroup
+  lineinfile:
+    dest: /etc/pam.d/su
+    state: present
+    regexp: '^auth required pam_wheel.so use_uid group=sugroup'
+    line: 'auth required pam_wheel.so use_uid group=sugroup'

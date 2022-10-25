@@ -1,0 +1,18 @@
+- name: update-grub
+  command: update-grub
+
+- name: auditd-rules-reload
+  command: augenrules --load
+
+- name: journald-restart
+  command: systemctl restart systemd-journald
+
+- name: sshd-check
+  command: sshd -t
+  notify:
+    - sshd-restart
+
+- name: sshd-restart
+  service:
+    name: ssh
+    state: restarted

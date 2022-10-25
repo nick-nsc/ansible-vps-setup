@@ -1,0 +1,20 @@
+---
+- name: Make sure ntp and chrony don't interfere with timesyncd
+  apt:
+    name:
+      - ntp
+      - chrony
+    state: absent
+    purge: yes
+
+- name: Check if timesyncd is enabled
+  command: systemctl is-enabled systemd-timesyncd.service
+  register: var_timesyncd_isenabled
+  changed_when: false
+  failed_when: "var_timesyncd_isenabled.stdout != 'enabled'"
+
+- name: Check if timesyncd is active
+  command: systemctl is-active systemd-timesyncd.service
+  register: var_timesyncd_isactive
+  changed_when: false
+  failed_when: "var_timesyncd_isactive.stdout != 'active'"

@@ -1,0 +1,80 @@
+---
+- name: Install iptables
+  apt:
+    name: iptables
+    state: present
+
+- name: Install iptables-persistent
+  apt:
+    name: iptables-persistent
+    state: present
+
+- name: Purge ufw
+  apt:
+    name: ufw
+    state: absent
+    purge: yes
+
+- name: Purge nftables
+  apt:
+    name: nftables
+    state: absent
+    purge: yes
+
+- name: Drop invalid connections
+  iptables:
+    chain: INPUT
+    ctstate: INVALID
+    jump: DROP
+
+- name: Allow protocol ICMP.
+  iptables:
+    chain: INPUT
+    protocol: icmp
+    jump: ACCEPT
+
+- name: Allow localhost
+  iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+
+- name: Allow related and established connections
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    in_interface: "{{ network_interface_name }}"
+    jump: ACCEPT
+
+- name: Allow new and established SSH connections
+  iptables:
+    chain: INPUT
+    ctstate: NEW,ESTABLISHED
+    in_interface: "{{ network_interface_name }}"
+    protocol: tcp
+    destination_port: 22
+    jump: ACCEPT
+
+- name: Set policy for INPUT chain to DROP
+  iptables:
+    chain: INPUT
+    policy: DROP
+
+- name: Set policy for FORWARD chain to DROP
+  iptables:
+    chain: FORWARD
+    policy: DROP
+
+- name: Set policy for OUTPUT chain to ACCEPT
+  iptables:
+    chain: OUTPUT
+    policy: ACCEPT
+
+- name: Create iptables dir.
+  file:
+    path: /etc/iptables
+    state: directory
+
+- name: Save iptables settings permanently.
+  shell: iptables-save > /etc/iptables/rules.v4
+  changed_when: false
