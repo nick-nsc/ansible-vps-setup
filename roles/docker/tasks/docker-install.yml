@@ -1,0 +1,60 @@
+---
+- name: Remove old versions of Docker
+  apt:
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+    state: absent
+    purge: yes
+
+- name: Install Docker dependencies
+  apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: present
+
+- name: Create /etc/apt/keyrings directory if it does not exist
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '755'
+
+- name: Check if Docker apt key already exists
+  stat:
+    path: /etc/apt/keyrings/docker.gpg
+  register: docker_apt_key
+
+- name: Add Docker apt key if it does not exist
+  shell: >
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  when: not docker_apt_key.stat.exists
+
+- name: Check if /etc/apt/sources.list.d/docker.list already exists
+  stat:
+    path: /etc/apt/sources.list.d/docker.list
+  register: docker_apt_source
+
+- name: Setup Docker repository
+  shell: >
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  when: not docker_apt_source.stat.exists
+  notify:
+    - update-apt-cache
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Install Docker Engine, containerd and Docker Compose
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
