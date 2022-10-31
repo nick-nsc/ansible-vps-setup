@@ -9,15 +9,21 @@
     name: net.ipv4.conf.default.send_redirects
     value: '0'
 
+- name: Check if Docker exists; if so, do not disable IP forwarding
+  stat: path=/etc/init.d/docker
+  register: docker_status
+
 - name: Disable IP forwarding (1)
   ansible.posix.sysctl:
     name: net.ipv4.ip_forward
     value: '0'
+  when: not docker_status.stat.exists
 
 - name: Disable IP forwarding (2)
   ansible.posix.sysctl:
     name: net.ipv6.conf.all.forwarding
     value: '0'
+  when: not docker_status.stat.exists
 
 - name: Deny source routed packets (1)
   ansible.posix.sysctl:
