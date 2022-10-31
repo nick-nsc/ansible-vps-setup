@@ -23,7 +23,8 @@ Task files contain configuration for:
 
 ### Docker
 
-This role installs `docker` and `docker compose`.
+This role installs the latest `docker` and `docker compose` versions.  
+It also adds the specified users to the `docker` group.
 
 ## Usage
 
@@ -37,6 +38,7 @@ Edit the `defaults` variables per role as needed.
 
 Execute the whole playbook or selected tasks by setting tags:
 ```bash
+e.g.
 ansible-playbook -i inventory vps.yml
-ansible-playbook -i inventory vps.yml --tags "apparmor,sysctl"
+ansible-playbook -i inventory vps.yml --tags "sysctl,docker"
 ```
