@@ -31,3 +31,6 @@
 
 - import_tasks: passwords.yml
   tags: passwords
+
+- import_tasks: systemfiles.yml
+  tags: systemfiles

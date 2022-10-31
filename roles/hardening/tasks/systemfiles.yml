@@ -1,0 +1,63 @@
+---
+- name: Set permissions and ownership on /etc/passwd
+  file:
+    path: /etc/passwd
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Set permissions and ownership on /etc/passwd-
+  file:
+    path: /etc/passwd-
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Set permissions and ownership on /etc/group
+  file:
+    path: /etc/group
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Set permissions and ownership on /etc/passwd
+  file:
+    path: /etc/passwd
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Set permissions and ownership on /etc/group-
+  file:
+    path: /etc/group-
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Set permissions and ownership on /etc/shadow
+  file:
+    path: /etc/shadow
+    owner: root
+    group: root
+    mode: '640'
+
+- name: Set permissions and ownership on /etc/shadow-
+  file:
+    path: /etc/shadow-
+    owner: root
+    group: shadow
+    mode: '640'
+
+- name: Set permissions and ownership on /etc/gshadow
+  file:
+    path: /etc/gshadow
+    owner: root
+    group: shadow
+    mode: '640'
+
+- name: Set permissions and ownership on /etc/gshadow-
+  file:
+    path: /etc/gshadow-
+    owner: root
+    group: shadow
+    mode: '640'
